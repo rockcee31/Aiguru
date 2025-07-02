@@ -1,5 +1,5 @@
 'use client'
-
+import Link from "next/link";
 import Image from "next/image";
 import header from "../../../public/header.png";
 import { useSelector } from 'react-redux';
@@ -104,12 +104,13 @@ const handleStart = async()=>{
        
                                </fieldset>
                            </div>
-       
+                           <Link href="/persona/chat">
                            <button className="btn bg-[#FF9900] text-black border-[#e17d00] mt-6" onClick={handleStart}>
                                
                                GET STARTED
-                           </button>
-                       </div>
+                           </button>    
+                           </Link>                  
+                           </div>
                    </div>
        
                </div>
