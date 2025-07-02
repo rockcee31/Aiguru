@@ -1,11 +1,18 @@
 'use client'
-import { headers } from "next/headers";
-import { useState } from "react";
-export default function PersonaBody(){
-    const { setStarted,setPersona} = useContext(AppContext);
-    const [name,setName] = useState("")
-    const [description,setDescription] = useState('')
 
+import Image from "next/image";
+import header from "../../../public/header.png";
+import { useSelector } from 'react-redux';
+import { useState } from "react";
+import {useDispatch} from 'react-redux';
+import {setPersona} from '../../store/slices/personaSlice'
+
+export default function PersonaBody(){
+     const dispatch = useDispatch();
+    const [name, setName] = useState('');
+const [description, setDescription] = useState('');
+
+    const persona = useSelector((state)=>state.persona)
 function toTitleCase(str) {
   return str
     .toLowerCase()
@@ -30,9 +37,9 @@ const handleStart = async()=>{
           const about = res.data.about
           
           const image = res.data.image;
-          setName(personaName)
-           setPersona({ name: personaName, about, image }); // Store persona globally
-           setStarted(true);                  // Signal app to go to ChatUI
+          
+           dispatch(setPersona({ name: personName, about: about,image:image,setStarted:true })) // Store persona globally
+                          // Signal app to go to ChatUI
 
          } catch (error) {
             console.error(error)
@@ -40,7 +47,7 @@ const handleStart = async()=>{
        
     }
     return(
-       <div className='bg-gray-50 text-black'>
+       <div className=' text-white'>
                
        
                    <div className='w-full  '>
@@ -54,15 +61,18 @@ const handleStart = async()=>{
        
        
                        </div>
-                       {/* <div className='justify center flex justify-center ml-20 max-w-3xl'>
-                           <p className='font-semibold text-lg'>PersonaTalk is a Generative AI-powered web application that lets users converse with AI personas of famous people. By combining real-world data from Wikipedia and the powerful capabilities of OpenAI’s GPT model, PersonaTalk creates intelligent, context-aware, and engaging conversations with historical figures, celebrities, scientists, and more — all simulated as if you're chatting directly with them.</p>
-                       </div> */}
+                       
                    </div>
        
                    <div className='min-h-screen w-full   flex justify-around'>
        
-                       <div>
-                           <img src={headers} className='h-md w-md'> </img>
+                       <div className='h-md w-md relative'> 
+                           <Image
+        src={header}
+        alt="robot"
+        fill
+        className="object-contain"
+      />
                        </div>
                    
        
@@ -72,24 +82,24 @@ const handleStart = async()=>{
        
                    <div className='flex  items-center mb-50'>
                        <div className="relative w-full h-fit max-w-xl  p-6 border border-gray-300 rounded-xl shadow-md bg-white">
-                           <h1 className="text-2xl font-bold text-center mb-4 whitespace-nowrap">
+                           <h1 className="text-2xl font-bold text-center mb-4 whitespace-nowrap text-black">
                                CHAT WITH ANY FAMOUS PERSON 
                            </h1>
        
                            {/* You can later add input fields and chat area here */}
-                           <div className='mt-5'>
-                               <fieldset className="fieldset">
-                                   <legend className="fieldset-legend">Type Name of a person you want to chat with</legend>
-                                   <input type="text" className="input" placeholder="Type here" 
+                           <div className='mt-5 '>
+                               <fieldset className="fieldset ">
+                                   <legend className="fieldset-legend text-black">Type Name of a person you want to chat with</legend>
+                                   <input type="text" className="input text-white" placeholder="Type here" 
                                    value={name}
                                    onChange={(e) => setName(e.target.value)} />
        
                                </fieldset>
                            </div>
-                           <div className='mt-5'>
-                               <fieldset className="fieldset">
-                                   <legend className="fieldset-legend">Tell Something about the person</legend>
-                                   <textarea className="textarea h-24" placeholder="He is a famous actor?(like this)"
+                           <div className='mt-5 '>
+                               <fieldset className="fieldset ">
+                                   <legend className="fieldset-legend text-black">Tell Something about the person</legend>
+                                   <textarea className="textarea h-24 text-white" placeholder="He is a famous actor?(like this)"
                                    value={description} onChange={(e)=>setDescription(e.target.value)}></textarea>
        
                                </fieldset>

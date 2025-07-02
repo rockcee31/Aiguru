@@ -1,11 +1,11 @@
 
-import { useRouter } from 'next/navigation'
+import Link from 'next/link';
 import Image from "next/image";
 import interview from "../../../public/interview.png"
 import persona from "../../../public/persona.png"
 import document from "../../../public/document.png"
 export default function Cards() {
-  const router = useRouter();
+
   return (
     <div className="w-full mt-5">
     <div className="grid md:grid-cols-3 gap-4 md:gap-2  text-white max-w-screen-xl mx-auto transform transition-transform duration-300 justify-items-center">
@@ -42,9 +42,7 @@ export default function Cards() {
           />
         </div>
         <div className="card-body ">
-          <h2 className="card-title">Practice with AI Interviewer
-
-</h2>
+          <h2 className="card-title">Practice with AI Interviewer</h2>
           <p>
             Simulate real-time interviews tailored to your subject or job role and improve your confidence.
           </p>
@@ -70,7 +68,9 @@ export default function Cards() {
             Build a custom learning persona based on your favorite teacher or expert to guide your studies.
           </p>
           <div className="card-actions justify-end">
-            <button onClick={() => router.push('/persona')} className="btn text-[#D9E3F0]  bg-orange-400">START NOW</button>
+            <Link href="/persona">
+            <button className="btn text-[#D9E3F0]  bg-orange-400">START NOW</button>
+            </Link>
           </div>
         </div>
       </div>
