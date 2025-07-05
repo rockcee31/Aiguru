@@ -1,11 +1,26 @@
+
 'use client';
 
 import { useState } from 'react';
 import { FilePlus, Loader2 } from 'lucide-react';
+import axios from 'axios';
+
+
+import { useDispatch } from 'react-redux';
+import { setMcq } from '@/store/slices/mcqSlice';
+
+import { useRouter } from 'next/navigation';
+
 
 export default function McqUi() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [user_id,setuser_id] =  useState("");
+  const [generated,setgenerated] = useState(false)
+  const [load,setload] = useState(false)
+  const dispatch = useDispatch()
+  const router = useRouter();
+
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -17,17 +32,50 @@ export default function McqUi() {
     setFile(e.target.files[0]);
   };
 
-  const handleGenerate = async () => {
+  const handleBackendUplaod = async () => {
     if (!file) return alert('Please upload a file first.');
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try{
+        const res = await axios.post("http://localhost:8000/upload",formData);
+
+        console.log("upload response",res.data)
+       
+        setuser_id(res.data.user_id)
+        
+    }catch(error){
+        console.log("error while uploading file".error)
+    }
     setLoading(true);
 
     // Simulate upload or make API call here
     setTimeout(() => {
       setLoading(false);
-      alert("MCQs generated (mock)");
+      setgenerated(true)
+      
     }, 2000);
   };
+   
+  const handleGenerate = async()=>{
+         const res = await axios.post("http://localhost:8000/mcq",{
+                  user_id: user_id,
+                  start_index: 0,
+                  count: 10
+                  })
 
+        dispatch(setMcq({
+          mcq:res.data.questions
+        }))
+
+        setload(true)
+
+        setTimeout(()=>{
+          setload(false)
+          router.push('/mcq/questions')
+        },2000)
+          
+  }
   return (
     <div className="min-h-screen  flex flex-col items-center justify-center px-4">
       <div className="w-full max-w-lg p-8 rounded-xl border border-gray-300 bg-white shadow-md">
@@ -58,15 +106,26 @@ export default function McqUi() {
           </div>
         )}
 
-        <button
+        {generated?<button
   onClick={handleGenerate}
   className={`w-full py-2 rounded bg-orange-500 hover:bg-orange-600 text-white font-semibold flex items-center justify-center transition ${
     loading ? 'opacity-70 cursor-not-allowed' : ''
   }`}
   disabled={loading}
->
-  {loading ? "Generating..." : "Generate MCQs"}
+>  
+  
+  {load ? "Generating..." : "Generate"}
+</button>:<button
+  onClick={handleBackendUplaod}
+  className={`w-full py-2 rounded bg-orange-500 hover:bg-orange-600 text-white font-semibold flex items-center justify-center transition ${
+    loading ? 'opacity-70 cursor-not-allowed' : ''
+  }`}
+  disabled={loading}
+>  
+  
+  {loading ? "Uploading..." : "Upload"}
 </button>
+}
       </div>
     </div>
   );
