@@ -1,15 +1,15 @@
 import  {createSlice} from '@reduxjs/toolkit';
 
 const initialState ={
-     mcq: ''
+     mcq: []
 }
 
 const mcqSlice = createSlice({
         name: 'mcq',
         initialState,
         reducers:{
-            setMcq:()=>{
-                state.user_id = action.payload.user_id
+            setMcq:(state,action)=>{
+                state.mcq = action.payload.mcq
             }
         }
 })

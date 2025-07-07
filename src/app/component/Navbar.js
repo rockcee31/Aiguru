@@ -3,11 +3,14 @@ const interTight = Inter_Tight({ subsets: ['latin'], weight: ['300', '700'] });
 import Image from "next/image";
 import bot from '../../../public/bot.png'
 import header from '../../../public/header.png'
+
+import Link from 'next/link';
 export default function Navbar(){
+  
     return(
         <nav>
             <div className="  text-white  navbar   shadow-sm flex items-center justify-between px-5 w-full h-20 font-lato font-bold">
-          <div className="flex">
+          <div className="flex ">
             <span>
                 <Image
             src={header}
@@ -15,7 +18,7 @@ export default function Navbar(){
             height={60}
             width={60}/>
             </span>
-            <a className={`p-0 btn btn-ghost text-2xl animate-fade-in ${interTight.className} leading-none`}><span className="text-gray-500">Ai</span><span>Guru</span></a>
+            <Link href="/" className={`p-0 btn btn-ghost text-2xl animate-fade-in ${interTight.className} leading-none `} ><span className="text-gray-500">Ai</span><span>Guru</span></Link>
           </div>
          
             <div

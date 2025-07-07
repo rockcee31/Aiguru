@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FilePlus, Loader2 } from 'lucide-react';
+import { FilePlus, FileQuestionMark, Loader2 } from 'lucide-react';
 import axios from 'axios';
 
 
@@ -33,47 +33,50 @@ export default function McqUi() {
   };
 
   const handleBackendUplaod = async () => {
-    if (!file) return alert('Please upload a file first.');
-    const formData = new FormData();
-    formData.append("file", file);
+  if (!file) return alert('Please upload a file first.');
 
-    try{
-        const res = await axios.post("http://localhost:8000/upload",formData);
+  const formData = new FormData();
+  formData.append("file", file);
 
-        console.log("upload response",res.data)
-       
-        setuser_id(res.data.user_id)
-        
-    }catch(error){
-        console.log("error while uploading file".error)
-    }
-    setLoading(true);
+  setLoading(true); // Start loading immediately before the upload
 
-    // Simulate upload or make API call here
-    setTimeout(() => {
-      setLoading(false);
-      setgenerated(true)
-      
-    }, 2000);
-  };
+  try {
+    const res = await axios.post("http://localhost:8000/upload", formData);
+
+    console.log("upload response", res.data);
+    setuser_id(res.data.user_id);
+    setgenerated(true); // Indicate that upload is done and ready to generate
+  } catch (error) {
+    console.error("Error while uploading file:", error);
+    alert("Upload failed.");
+  } finally {
+    setLoading(false); // Always stop loading once the request is done
+  }
+};
+
    
   const handleGenerate = async()=>{
+        setload(true)
+        try{
          const res = await axios.post("http://localhost:8000/mcq",{
                   user_id: user_id,
                   start_index: 0,
                   count: 10
                   })
+        console.log(res)
 
         dispatch(setMcq({
           mcq:res.data.questions
         }))
+  
+        
+      }catch(err){
 
-        setload(true)
-
-        setTimeout(()=>{
-          setload(false)
-          router.push('/mcq/questions')
-        },2000)
+      }finally{
+         setload(false)
+        router.push('/mcq/questions')
+      }
+        
           
   }
   return (
@@ -109,9 +112,9 @@ export default function McqUi() {
         {generated?<button
   onClick={handleGenerate}
   className={`w-full py-2 rounded bg-orange-500 hover:bg-orange-600 text-white font-semibold flex items-center justify-center transition ${
-    loading ? 'opacity-70 cursor-not-allowed' : ''
+    load ? 'opacity-70 cursor-not-allowed' : ''
   }`}
-  disabled={loading}
+  disabled={load}
 >  
   
   {load ? "Generating..." : "Generate"}
