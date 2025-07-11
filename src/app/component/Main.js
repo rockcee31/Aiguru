@@ -12,7 +12,7 @@ export default function Main() {
 
       <section>
         <div className="min-h-screen w-full  flex flex-col justify-center">
-          <div className={`${lato.className} font-semibold text-7xl flex justify-center items-center text-[#cedee6]`}>Services</div>
+          <div className={`${lato.className} pb-5 font-semibold text-7xl flex justify-center items-center text-[#cedee6]`}>Services</div>
           <Cards/>
         </div>
       </section>

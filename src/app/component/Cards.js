@@ -17,7 +17,7 @@ export default function Cards() {
             src={document}
             alt="Shoes"
             fill
-            className="rounded-full"
+            className="rounded-4xl"
           />
         </div>
         <div className="card-body ">
@@ -42,7 +42,7 @@ export default function Cards() {
             src={interview}
             alt="Shoes"
             fill
-            className="rounded-full"
+            className="rounded-4xl"
           />
         </div>
         <div className="card-body ">
@@ -63,7 +63,7 @@ export default function Cards() {
             src={persona}
             alt="Shoes"
             fill
-            className="rounded-full"
+            className="rounded-4xl"
           />
         </div>
         <div className="card-body ">

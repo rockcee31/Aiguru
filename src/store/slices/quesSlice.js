@@ -9,7 +9,7 @@ const quesSlice = createSlice({
     initialState,
     reducers:{
         setQues:(state,action)=>{
-            state.ques = action.payload.selectedoptions
+            state.ques = action.payload.ques
         }
 
     }
