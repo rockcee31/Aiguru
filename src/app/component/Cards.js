@@ -51,7 +51,9 @@ export default function Cards() {
             Simulate real-time interviews tailored to your subject or job role and improve your confidence.
           </p>
           <div className="card-actions justify-end">
+            <Link href="/interview">
             <button className="btn text-[#D9E3F0]  bg-orange-400">START NOW</button>
+            </Link>
           </div>
         </div>
       </div>
