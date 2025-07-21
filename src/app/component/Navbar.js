@@ -18,7 +18,7 @@ export default function Navbar(){
             height={60}
             width={60}/>
             </span>
-            <Link href="/" className={`p-0 btn btn-ghost text-2xl animate-fade-in ${interTight.className} leading-none `} ><span className="text-gray-500">Ai</span><span>Guru</span></Link>
+            <Link href="/" className={`p-0 btn btn-ghost sm:text-2xl animate-fade-in ${interTight.className} text-xl leading-none `} ><span className="text-gray-500">Ai</span><span>Guru</span></Link>
           </div>
          
             <div
