@@ -2,7 +2,7 @@ import Cards from "./Cards";
 import Hero from "./Hero";
 import { Lato} from "next/font/google";
 const lato = Lato({ subsets: ["latin"], weight: ["400", "700"] });
-
+import About from "./About";
 export default function Main() {
   return (
     <div className="flex flex-col gap-1 min-h-screen w-full  ">
@@ -15,6 +15,10 @@ export default function Main() {
           <div className={`${lato.className} pb-5 font-semibold text-7xl flex justify-center items-center text-[#cedee6]`}>Services</div>
           <Cards/>
         </div>
+      </section>
+
+      <section>
+        <About/>
       </section>
     </div>
   );
